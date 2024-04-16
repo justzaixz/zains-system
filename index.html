@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starting point</title>
+  <style>
+    /* CSS code to change the styling h2 element */
+    h2 {
+        color: black; /* Change 'blue' to the desired color */
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-image: url('https://wallpapercave.com/wp/wp4068263.jpg'); /* Background Image*/
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    /* CSS code to make button backgrounds transparent */
+    input[type="button"] {
+        background-color: white;
+        border: 1px solid black;
+        cursor: pointer;
+        width: 600px;
+        height: 50px;
+        font-size: 20px; /* Set font size to 20 pixels */
+        font-family: 'Poppins, sans-serif';
+        color: black;
+    }
+
+    /* CSS code to style the display */
+    #display {
+      width: 600px;
+      height: 30px;
+      font-size: 20px;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Poppins, sans-serif';
+      background-color: transparent;
+      text-align: left; /* Left align the text */
+      position: absolute;
+      top: 45%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    /* CSS code to center the buttons */
+    .button-container {
+      text-align: center;
+      position: relative;
+      top: 90%; /* Adjust this value as needed to lower the buttons */
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="starting-point">
+      <h2>Hey! What would you like to do today?</h2>
+      <form>
+        <div class="display">
+          <input type="text" name="display" id="display">
+        </div>
+        <div class="button-container">
+          <input type="button" value="I want to use a calculator!" onclick="confirmCalculatorUse()">
+          <input type="button" value="I want to convert my age into dog years!" onclick="confirmDACUse()">
+          <input type="button" value="I want to use a stopwatch!" onclick="confirmStopwatchUse()">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function typeWriter(text, i, display) {
+      if (i < text.length) {
+        display.value += text.charAt(i);
+        i++;
+        setTimeout(function() {
+          typeWriter(text, i, display);
+        }, 50); // Adjust typing speed here (milliseconds)
+      }
+    }
+
+    function confirmCalculatorUse() {
+      // Display a confirmation dialog
+      if (confirm("Are you sure you want to use the calculator?")) {
+        var display = document.getElementById("display");
+        display.value = ""; // Clear the display
+        typeWriter("Directing you to my calculator!", 0, display);
+        setTimeout(function() {
+          window.location.href = "https://justzaixz.github.io/calculator/"; // Replace "URL_of_your_other_Replit_code" with the actual URL
+        }, 2000);
+      } else {
+        // If user cancels, do this
+      }
+    }
+
+    function confirmDACUse() {
+      // Display a confirmation dialog
+      if (confirm("Are you sure you want to use the dog age converter?")) {
+        var display = document.getElementById("display");
+        display.value = ""; // Clear the display
+        typeWriter("Directing you to my dog age converter!", 0, display);
+        // Redirect to another Replit code after 2 seconds
+        setTimeout(function() {
+          window.location.href = "https://justzaixz.github.io/Dog-Age-Converter/"; // Replace "URL_of_your_other_Replit_code" with the actual URL
+        }, 2000);
+      } else {
+        // If user cancels, do nothing
+      }
+    }
+
+    function confirmStopwatchUse() {
+      // Display a confirmation dialog
+      if (confirm("Are you sure you want to use the stopwatch?")) {
+        var display = document.getElementById("display");
+        display.value = ""; // Clear the display
+        typeWriter("Directing you to my stopwatch!", 0, display);
+        // Redirect to another Replit code after 2 seconds
+        setTimeout(function() {
+          window.location.href = "file:///C:/Users/zaind/OneDrive/Documents/My%20System/stopwatch.html"; // Replace "URL_of_your_other_Replit_code" with the actual URL
+        }, 2000);
+      } else {
+        // If user cancels, do nothing
+      }
+    }
+  </script>
+
+</body>
+</html>
