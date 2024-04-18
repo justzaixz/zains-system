@@ -1,141 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starting point</title>
-  <style>
-    /* CSS code to change the styling h2 element */
-    h2 {
-        color: black; /* Change 'blue' to the desired color */
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: "Poppins", sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whatsapp-Redirector</title>
+
+<style>
+    /* CSS for video background */
+    video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        max-width: 100%; /* width */
+        max-width: 100%; /* height */
+
+        z-index: -1; /* Ensure the video is behind other content (kind of like layering) */
     }
 
-    body {
-      background-image: url('https://wallpapercave.com/wp/wp4068263.jpg'); /* Background Image*/
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+    /* Styles for form container */
+    .container {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 20px;
+        border-radius: 10px;
     }
-    
-    /* CSS code to make button backgrounds transparent */
-    input[type="button"] {
-        background-color: white;
-        border: 1px solid black;
+
+    /* Styles for form elements */
+    .whatsapp-redirectory form {
+        display: flex;
+        flex-direction: column; /* Arrange form elements vertically */
+        align-items: center; /* Center align form elements horizontally */
+    }
+
+    /* Styles for input fields */
+    .display input[type="tel"] {
+        width: 300px; /* Adjust width as needed */
+        height: 40px; /* Adjust height as needed */
+        font-size: 16px;
+        padding: 5px 10px;
+        margin-bottom: 10px; /* Add space below input field */
+        border: none;
+        border-radius: 5px;
+    }
+
+    /* Styles for buttons */
+    input[type="button"], input[type="reset"] {
+        width: 200px; /* Adjust width as needed */
+        height: 40px; /* Adjust height as needed */
+        font-size: 16px;
+        margin-top: 10px; /* Add space above buttons */
         cursor: pointer;
-        width: 600px;
-        height: 50px;
-        font-size: 20px; /* Set font size to 20 pixels */
-        font-family: 'Poppins, sans-serif';
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff; /* White background */
+        color: #000000; /* Black text color */
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    input[type="button"]:hover, input[type="reset"]:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Styles for the popup window */
+    .popup {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup-content {
+        background-color: #fefefe;
+        margin: 20% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 400px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover, .close:focus {
         color: black;
+        text-decoration: none;
+        cursor: pointer;
     }
+</style>
 
-    /* CSS code to style the display */
-    #display {
-      width: 600px;
-      height: 30px;
-      font-size: 20px;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      font-family: 'Poppins, sans-serif';
-      background-color: transparent;
-      text-align: left; /* Left align the text */
-      position: absolute;
-      top: 45%;
-      left: 60%;
-      transform: translate(-50%, -50%);
-      color: white;
-    }
-
-    /* CSS code to center the buttons */
-    .button-container {
-      text-align: center;
-      position: relative;
-      top: 90%; /* Adjust this value as needed to lower the buttons */
-    }
-  
-  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="starting-point">
-      <h2>Hey! What would you like to do today?</h2>
-      <form>
-        <div class="display">
-          <input type="text" name="display" id="display">
-        </div>
-        <div class="button-container">
-          <input type="button" value="I want to use a calculator!" onclick="confirmCalculatorUse()">
-          <input type="button" value="I want to convert my age into dog years!" onclick="confirmDACUse()">
-          <input type="button" value="I want to use a stopwatch!" onclick="confirmStopwatchUse()">
-        </div>
-      </form>
+
+<!-- Video background -->
+<video autoplay muted loop id="video-bg">
+    <source src="C:\Users\zaind\Downloads\Zain (1).mp4" type="video/mp4">
+</video>
+
+<div class="container">
+    <div class="whatsapp-redirectory">
+        <form>
+            <select id="countryCodes"> <!-- This gives it an ID for later, when I wrote that the variable will check this ID's value. -->
+                <option value="Please Select a Country">Please Select a Country</option>
+                <option value="+1">United States (+1)</option>
+                <option value="+86">China (+86)</option>
+                <option value="+91">India (+91)</option>
+                <option value="+44">United Kingdom (+44)</option>
+                <option value="+81">Japan (+81)</option>
+                <option value="+7">Russia (+7)</option>
+                <option value="+49">Germany (+49)</option>
+                <option value="+62">Indonesia (+62)</option>
+                <option value="+55">Brazil (+55)</option>
+                <option value="+971">UAE (+971)</option>
+                <option value="+965">Kuwait (+965) </option>
+                <!-- This makes a dropdown menu with these country codes -->
+            </select>
+
+            <div class="display">
+                <input type="tel" name="numberInput" id="numberInput" placeholder="Enter a valid phone number">
+            </div>
+            <div>
+                <input type="button" id="generateButton" value="Generate Link" onclick="generateLink()">
+                <input type="reset" id="resetButton" value="Reset">
+            </div>
+        </form>
     </div>
-  </div>
+</div>
 
-  <script>
-    function typeWriter(text, i, display) {
-      if (i < text.length) {
-        display.value += text.charAt(i);
-        i++;
-        setTimeout(function() {
-          typeWriter(text, i, display);
-        }, 50); // Adjust typing speed here (milliseconds)
-      }
+<!-- Popup window -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p>Got Any Feedback?:</p>
+        <!-- Got any feedback button inside the popup window -->
+        <input type="button" id="feedbackButton" value="Yes I do!" onclick="feedbackButton()">
+    </div>
+</div>
+
+<script>
+    function generateLink() {
+        let numberInput = document.getElementById("numberInput").value;
+        var baseUrl = "https://wa.me/";
+
+        // Get the selected country code from the dropdown
+        let countryCode = document.getElementById("countryCodes").value;
+
+        if (countryCode === "Please Select a Country") {
+            console.log('User Did not select anything (COUNTRY)');
+            alert('Please select a country code.');
+            return; // Exit the function early if countryCode is not selected
+        }
+
+        // Check if the input is a valid number
+        if (!isNaN(numberInput)) {
+            console.log("The user entered a valid number");
+            let fullUrl = baseUrl + countryCode + numberInput;
+
+            // Check if the input starts with '0'
+            if (numberInput.startsWith('0')) {
+                console.log("The user entered a number starting with '0'");
+                numberInput = numberInput.substring(1); // Remove the first character (zero)
+                fullUrl = baseUrl + countryCode + numberInput; // Update the full URL
+            }
+
+            window.location.href = fullUrl; // Redirect to WhatsApp page
+        } else {
+            console.log("User Did not enter a valid number.");
+            alert('Please Enter A Valid Number');
+            document.getElementById("numberInput").value = ""; // Reset the display
+        }
     }
 
-    function confirmCalculatorUse() {
-      // Display a confirmation dialog
-      if (confirm("Are you sure you want to use the calculator?")) {
-        var display = document.getElementById("display");
-        display.value = ""; // Clear the display
-        typeWriter("Directing you to my calculator!", 0, display);
-        setTimeout(function() {
-          window.location.href = "https://justzaixz.github.io/calculator/"; // Replace "URL_of_your_other_Replit_code" with the actual URL
-        }, 2000);
-      } else {
-        // If user cancels, do this
-      }
+    function feedbackButton() {
+        console.log('feedback button has been clicked')
+        window.location.href = "https://forms.gle/9bjZ4pyhA1xJMr5C9";
     }
 
-    function confirmDACUse() {
-      // Display a confirmation dialog
-      if (confirm("Are you sure you want to use the dog age converter?")) {
-        var display = document.getElementById("display");
-        display.value = ""; // Clear the display
-        typeWriter("Directing you to my dog age converter!", 0, display);
-        // Redirect to another Replit code after 2 seconds
-        setTimeout(function() {
-          window.location.href = "https://justzaixz.github.io/Dog-Age-Converter/"; // Replace "URL_of_your_other_Replit_code" with the actual URL
-        }, 2000);
-      } else {
-        // If user cancels, do nothing
-      }
+    function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
     }
+</script>
 
-    function confirmStopwatchUse() {
-      // Display a confirmation dialog
-      if (confirm("Are you sure you want to use the stopwatch?")) {
-        var display = document.getElementById("display");
-        display.value = ""; // Clear the display
-        typeWriter("Directing you to my stopwatch!", 0, display);
-        // Redirect to another Replit code after 2 seconds
-        setTimeout(function() {
-          window.location.href = "https://justzaixz.github.io/stopwatch/"; // Replace "URL_of_your_other_Replit_code" with the actual URL
-        }, 2000);
-      } else {
-        // If user cancels, do nothing
-      }
+<script>
+    // Function to open the popup window
+    function openPopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "block";
     }
-  </script>
+</script>
+
+<!-- Script to open popup window when the page loads -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        openPopup();
+    });
+</script>
 
 </body>
 </html>
